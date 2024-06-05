@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #FFFEF8;
 }
 ol, ul {
 	list-style: none;
@@ -95,9 +96,18 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+li:hover, li a:hover {
 	color: #B1663C;
 }
+
+nav li a{
+	text-decoration: none;
+}
+
+.active{
+	font-weight:bold;
+}
+/*----- INTRODUCTION ------- */
 #introduction {
 	display: flex;
 	align-items: center;
@@ -125,6 +135,30 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+/*--------- FILTRES -------*/
+#filtres{
+	display: flex;
+	justify-content: center;;
+}
+
+.btn-filtre{
+	background: none;
+	color: #1D6154;
+	border: 2px solid #1D6154;
+	border-radius: 24px ;
+	font: inherit;
+	cursor: pointer;
+	margin: 0px 4px 0px 4px;
+	padding: 8px 24px 8px 24px;
+	font-weight: bold;
+}
+
+.btn-filtre:hover{
+	color: #fff;
+	background-color: #1D6154;
+}
+
+/* --------- GALLERY --------*/
 .gallery {
 	width: 100%;
 	display: grid;
@@ -178,6 +212,11 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover{
+	opacity: 0.8;
 }
 
 footer nav ul {
@@ -186,3 +225,39 @@ footer nav ul {
 	margin: 2em
 }
 
+/* ------- LOG in -------- */
+#login {
+	width: 30%;
+	margin:auto;
+}
+
+#login h2 {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+.form-login {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-login label{
+	margin: 0.5em 0;
+}
+
+.form-login input{
+	height: 40px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 1.5em;
+}
+
+.form-login input:focus{
+	outline: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.form-login a{
+	color: #000;
+	text-align: center;
+}
