@@ -1,8 +1,11 @@
+
 function hasToken(){
     return localStorage.getItem('authToken') !== null;
 }
 
 if(hasToken()){
+
+    
     // affichage de la modification
     affichageEdition();
     //Récupération des travaux depuis l'API
@@ -60,6 +63,7 @@ if(hasToken()){
         affichageEditTop.style.display = 'block';
         const affichageLogout = document.querySelector('.logout');
         affichageLogout.innerHTML = "logout";
+        affichageLogout.addEventListener('click', logout);
     }
     
     
@@ -203,4 +207,15 @@ if(hasToken()){
         const clear = document.querySelector(".gallery-container");
         clear.innerHTML = "";
     }
+
+    // Déconnexion et suppression du token
+    function logout() {
+        const token = localStorage.getItem('authToken');
+        console.log(token);
+        localStorage.removeItem('authToken');
+        window.location.href = "login.html";
+        console.log(token);
+    }
 }
+
+

@@ -1,5 +1,4 @@
-
-function login(){
+function recupForm(){
     const formulaireLogin = document.querySelector(".form-login");
     formulaireLogin.addEventListener("submit", function(event){
         //On arrête le comportement par défaut de submit
@@ -13,44 +12,44 @@ function login(){
         const chargeUtile = JSON.stringify(identifiant);
         console.log(chargeUtile);
 
-        // Appel de la fonction fetch avec toutes les informations nécessaires
-        fetch("http://localhost:5678/api/users/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: chargeUtile
-        })
-        //response est l'objet renvoyé par la requête fetch qui contient les détails de la réponse
-        .then(response => {
-            //response.ok renvoi true si le statut HTTP est dans la plage 200-299
-            if (!response.ok) {
-                //si la réponse n'est pas ok nous lancçons une erreur, ce qui rejette la promesse et passe au bloc 'catch'
-                throw new Error('Network response was not ok');
-            }
-            //si la réponse est ok, retourne une nouvelle promesse. Cette methode convertit le corps de la réponse en un objet JS qui est data
-            return response.json();
-        })
-        .then(data => {  
-            console.log('Success:', data.token);
-            //Stockage du token d'authentification
-            const token = data.token;
-            localStorage.setItem('authToken',token);
-
-            // Redirection vers la page index
-            window.location.href = "index.html";
-            alert('Connexion réussie !');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            erreurAuthentification();        
-        });
+        login(chargeUtile);
     });
 }
 
-login();
+recupForm();
+
+//Exemple de requête de login en JavaScript
+async function login(chargeUtile) {
+    try{
+        const response = await fetch('http://localhost:5678/api/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: chargeUtile
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            // Stocker le token dans le localStorage
+            localStorage.setItem('authToken', data.token);
+            // Redirection vers la page index
+            window.location.href = "index.html";
+        } else {
+            //console.error('Login failed');
+            erreurAuthentification();
+        }
+    }
+    catch(e){
+        console.error('Erreur:', e);    
+    }
+}
 
 //Affichage d'un message sur la page login pour indiquer que les identifiants ne sont pas correct
 function erreurAuthentification() {
-    const messageErreur=  document.getElementById("incorrect");
+    const messageErreur =  document.getElementById("incorrect");
     messageErreur.innerText = "Email ou mot de passe incorrect";
-    
 }
+
+
+
