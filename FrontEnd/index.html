@@ -17,13 +17,14 @@
 	<script type="module" src="modal.js" defer></script>
 </head>
 <body>
+	<div class="edit-top"><p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p></div>	
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="#portfolio">projets</a></li>
 			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
+			<li><a href="login.html" class="logout">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -41,7 +42,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="edit-container">
+			<h2>Mes Projets</h2>
+			<div class="edit" ><i class="fa-regular fa-pen-to-square"></i><a href="#modal-edit" class="js-modal"> Modifier</a></div>
+		</div>
 		<section id="filtres">
 		</section>
 		<div class="gallery">
@@ -61,13 +65,17 @@
 		</form>
 	</section>
 	<!-- FENETRE MODALE-->
-	<a href="#modal-edit" class="js-modal">Ouvrir la boite modale</a>
 	<aside id="modal-edit" class="modal" role="dialog" style="display:none">
 		<div class="modal-wrapper js-modal-stop">
-			<div class="close-modal">
+			<div class="nav-modal">
+				<button class="js-modal-previous"><i class="fa-solid fa-arrow-left"></i></button>
 				<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 			</div>
-			<div class="gallery-container">
+			<div class="modal-contain">
+				<div class="gallery-container">
+				</div>
+				<hr />
+				<button class="btn-modal"></button>
 			</div>
 		</div>
 	</aside>
