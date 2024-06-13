@@ -1,0 +1,57 @@
+/* ------- LOG in -------- */
+#login {
+	width: 30%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#login h2 {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+.form-login {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-login label {
+	margin: 0.5em 0;
+}
+
+.form-login input {
+	height: 40px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 1.5em;
+}
+
+.form-login input:focus {
+	outline: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.form-login a {
+	color: #000;
+	text-align: center;
+}
+
+#incorrect {
+	margin-top: 12px;
+	color: red;
+	text-align: center;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    row-gap: 5%;
+    justify-content: space-between;
+}

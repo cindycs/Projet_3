@@ -9,43 +9,46 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="./assets/login.css">
 	<script type="module" src="login.js"></script>
 </head>
 <body>
-<header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li><a href="index.html#portfolio">projets</a></li>
-			<li><a href="index.html#portfolio">contact</a></li>
-			<li><a href="login.html" class="active">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-</header>
-<main>
-    <section id="login">
-        <h2>Log in</h2>
-        <form method="get" action="index.html" class="form-login">
-            <label>E-mail</label> 
-            <input type="email" name="email">
-            <label>Mot de passe</label> 
-            <input type="password" name="password">
-            <input type="submit" name="submit" value="Se connecter">
-            <a href="#">Mot de passe oublié</a>
-			<p id="incorrect"></p>
-        </form>
-    </section>
-	
-	
-</main>
+<div class="container">
+	<header>
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li><a href="index.html#portfolio">projets</a></li>
+				<li><a href="index.html#portfolio">contact</a></li>
+				<li><a href="login.html" class="active">login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section id="login">
+			<h2>Log in</h2>
+			<form method="get" action="index.html" class="form-login">
+				<label>E-mail</label> 
+				<input type="email" name="email">
+				<label>Mot de passe</label> 
+				<input type="password" name="password">
+				<input class="btn-style" type="submit" name="submit" value="Se connecter">
+				<a href="#">Mot de passe oublié</a>
+				<p id="incorrect"></p>
+			</form>
+		</section>
+		
+		
+	</main>
 
-<footer>
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-</footer>
+	<footer class="footer-login">
+		<nav>
+			<ul>
+				<li>Mentions Légales</li>
+			</ul>
+		</nav>
+	</footer>
+</div>
 </body>
 </html>
