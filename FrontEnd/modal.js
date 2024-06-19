@@ -4,8 +4,7 @@ function hasToken(){
 }
 
 if(hasToken()){
-
-    
+   
     // affichage de la modification
     affichageEdition();
     //Récupération des travaux depuis l'API
@@ -25,6 +24,7 @@ if(hasToken()){
         modal.addEventListener('click', closeModal)
         modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+        localStorage.setItem('modalOpen', 'true');
     }
     
     //fonction de fermeture de modal
@@ -36,6 +36,7 @@ if(hasToken()){
         modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
         modal = null;
+        localStorage.setItem('modalOpen', 'false');
     }
     
     const stopPropagation = function (event){
@@ -132,21 +133,26 @@ if(hasToken()){
     }
     
     async function suppressionTravaux(id){
-        const token = localStorage.getItem('authToken');
-        const response = await fetch(`http://localhost:5678/api/works/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        });
-    
-        if (response.ok){
-            window.location.href = "index.html";
-            console.log('Élément supprimé avec succès');
+        try{
+            const token = localStorage.getItem('authToken');
+            const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+        
+            if (response.ok){
+                console.log('Élément supprimé avec succès');
+                location.reload();
+            }
+            else{
+                console.error('Erreur lors de la suppression :', response.statusText);
+            }
         }
-        else{
-            console.error('Erreur lors de la suppression :', response.statusText);
+        catch(e){
+            console.error('Erreur:', e);    
         }
     }
     
@@ -157,8 +163,6 @@ if(hasToken()){
         previousNone.style.display = 'block';
         const navModal = document.querySelector(".nav-modal");
         navModal.style.justifyContent = 'space-between';
-        const btnAjout = document.querySelector('.btn-ajout');
-
         const btnModalAjout = document.querySelector('.btn-ajout');
         btnModalAjout.style.display = 'none';
 
@@ -182,6 +186,9 @@ if(hasToken()){
         modalContain.appendChild(templateContent);
     
         afficherCategorie(categories);
+
+        const btnForm = document.querySelector('.btn-submit');
+        btnForm.disabled  = true;
     }
     
     //Affiche les categories
@@ -209,51 +216,35 @@ if(hasToken()){
 
             //Création d'un objet formData pour récupérer les données du formulaire
             const formData = new FormData(formModal);
-            //Recupération des données du form
-            /*const fileInput = document.getElementById('image');
-            const file = fileInput.files[0];
-            console.log(file);*/
-           
-        /* formData.append('image', formData.get(file));
-            formData.append('title', formData.get('title'));
-            formData.append('category', formData.get('category'))*/
             
+            validerTailleImage();
             
-            validationForm();
-            ajoutTravail(formData);
         });
         //document.addEventListener
     }
-
-    function boutonValidation(){
-
-        const form = document.querySelector('.form-modal');
-        const inputs = form.querySelectorAll('.champs, .inputfile');
-        const btnForm = document.querySelector('.btn-submit');
-        let btnValid = false;
+   
     
-        inputs.forEach(input => {
-            input.addEventListener('input', function() {
-            if (input.value.trim() === '') {
-                console.log('test2');
-                
-            } else {
-                console.log('test3');
-               btnValid = true;
-            }
-            });
-        });
-        console.log(btnValid);
+    function boutonValidation(){
+        const inputImage = document.getElementById('image');
+        const inputTitre = document.getElementById('title');
+        const inputCategorie = document.getElementById('categorie-list');
+        const btnForm = document.querySelector('.btn-submit');
+        let imageValid, categorieValid, titreValid = false;
 
-        if(btnValid){
-            console.log('ça rentre');
-            btnForm.classList.remove('inactif');
-            btnForm.classList.add('actif');
-        }
-        else{
-            btnForm.classList.remove('actif');
-                btnForm.classList.add('inactif');
-        }
+        inputTitre.addEventListener('change', function() {
+            titreValid  = inputTitre.value !== '';
+            btnForm.disabled = !(imageValid && categorieValid && titreValid);
+        });
+
+        inputImage.addEventListener('change', function() {
+            imageValid  = inputImage.value != null;
+            btnForm.disabled = !(imageValid && categorieValid && titreValid);
+        });
+
+        inputCategorie.addEventListener('change', function() {
+            categorieValid  = inputCategorie.value !== '';
+            btnForm.disabled = !(imageValid && categorieValid && titreValid);
+        });
     }
 
     function validationForm() {
@@ -291,6 +282,22 @@ if(hasToken()){
         }
         else{
             console.error('Erreur lors de l\'ajout :', response.statusText);
+        }
+    }
+
+    function validerTailleImage() {
+        const input = document.getElementById('image');
+        const file = input.files[0];
+        const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
+    
+        if (file.size > maxSize) {
+            alert('La taille du fichier ne doit pas dépasser 4 Mo.');
+            clearModal();
+            genererFormModal();
+        }
+        else {
+            validationForm();
+            ajoutTravail(formData);
         }
     }
 

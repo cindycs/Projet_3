@@ -217,6 +217,7 @@ input[type=file]{
 
 .btn-submit {
     margin-top: 28px;
+    background-color: #1D6154!important;
 }
 
 .champs{
@@ -227,10 +228,6 @@ input[type=file]{
     padding: 12px;
 }
 
-.inactif{
+.btn-submit:disabled{
     background-color: #A7A7A7!important;
-}
-
-.actif{
-    background-color: #1D6154!important;
 }
