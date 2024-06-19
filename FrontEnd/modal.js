@@ -88,7 +88,7 @@ if(hasToken()){
             const iconeElement = document.createElement("i");
             iconeElement.classList.add('fa-solid', 'fa-trash-can');
             const gallery = document.querySelector(".gallery-edit");
-            
+
             gallery.appendChild(workElement);
             workElement.appendChild(imageElement);
             workElement.appendChild(closeElement);
@@ -190,14 +190,18 @@ if(hasToken()){
     
         categories.forEach(categorie => {
             const categorieElement = categorie.name;
+            const categorieId = categorie.id;
             const optionElement = document.createElement("option");
-            optionElement.value = categorieElement;
+            optionElement.value = categorieId;
+            optionElement.innerText = categorieElement;
             datalistElement.appendChild(optionElement);
         });
     }
     
     function gestionFormulaire() {
         const formModal = document.querySelector('.form-modal');
+
+        boutonValidation();
        
         formModal.addEventListener("submit", function(event){
 
@@ -213,17 +217,50 @@ if(hasToken()){
         /* formData.append('image', formData.get(file));
             formData.append('title', formData.get('title'));
             formData.append('category', formData.get('category'))*/
+            
+            
             validationForm();
             ajoutTravail(formData);
         });
         //document.addEventListener
     }
+
+    function boutonValidation(){
+
+        const form = document.querySelector('.form-modal');
+        const inputs = form.querySelectorAll('.champs, .inputfile');
+        const btnForm = document.querySelector('.btn-submit');
+        let btnValid = false;
     
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+            if (input.value.trim() === '') {
+                console.log('test2');
+                
+            } else {
+                console.log('test3');
+               btnValid = true;
+            }
+            });
+        });
+        console.log(btnValid);
+
+        if(btnValid){
+            console.log('ça rentre');
+            btnForm.classList.remove('inactif');
+            btnForm.classList.add('actif');
+        }
+        else{
+            btnForm.classList.remove('actif');
+                btnForm.classList.add('inactif');
+        }
+    }
+
     function validationForm() {
         let isValid = true;
         const form = document.querySelector('.form-modal');
         const inputs = form.querySelectorAll('input[required]');
-        const btnForm = document.querySelector('.btn-submit');
+
 
         inputs.forEach(input => {
             if (!input.value.trim()) {
@@ -235,14 +272,6 @@ if(hasToken()){
             }
         });
 
-        if (isValid) {
-            btnForm.classList.remove('inactif');
-            btnForm.classList.add('actif');
-        } else {
-            btnForm.classList.remove('actif');
-            btnForm.classList.add('inactif');
-        }
-        
         return isValid;
     }
 

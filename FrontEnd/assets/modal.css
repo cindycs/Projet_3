@@ -221,9 +221,10 @@ input[type=file]{
 
 .champs{
     height: 40px;
-   
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
     margin-bottom: 14px;
+    border: none;
+    padding: 12px;
 }
 
 .inactif{
