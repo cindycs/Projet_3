@@ -17,76 +17,100 @@
 	<script type="module" src="modal.js" defer></script>
 </head>
 <body>
-	<div class="edit-top"><p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p></div>	
-<header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li><a href="#portfolio">projets</a></li>
-			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html" class="logout">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-</header>
-<main>
-	<section id="introduction">
-		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
-		</figure>
-		<article>
-			<h2>Designer d'espace</h2>
-			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
-		</article>
-	</section>
-	<section id="portfolio">
-		<div class="edit-container">
-			<h2>Mes Projets</h2>
-			<div class="edit" ><i class="fa-regular fa-pen-to-square"></i><a href="#modal-edit" class="js-modal"> Modifier</a></div>
-		</div>
-		<section id="filtres">
+<div class="edit-top"><p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p></div>
+<div class="container">	
+	<header>
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li><a href="#portfolio">projets</a></li>
+				<li><a href="#contact">contact</a></li>
+				<li><a href="login.html" class="logout">login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section id="introduction">
+			<figure>
+				<img src="./assets/images/sophie-bluel.png" alt="">
+			</figure>
+			<article>
+				<h2>Designer d'espace</h2>
+				<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+				<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+				<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
+			</article>
 		</section>
-		<div class="gallery">
-		</div>
-	</section>
-	<section id="contact">
-		<h2>Contact</h2>
-		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="post">
-			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
-			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
-		</form>
-	</section>
-	<!-- FENETRE MODALE-->
-	<aside id="modal-edit" class="modal" role="dialog" style="display:none">
-		<div class="modal-wrapper js-modal-stop">
-			<div class="nav-modal">
-				<button class="js-modal-previous"><i class="fa-solid fa-arrow-left"></i></button>
-				<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+		<section id="portfolio">
+			<div class="edit-container">
+				<h2>Mes Projets</h2>
+				<div class="edit" ><i class="fa-regular fa-pen-to-square"></i><a href="#modal-edit" class="js-modal"> Modifier</a></div>
 			</div>
-			<div class="modal-contain">
-				<div class="gallery-container">
+			<section id="filtres">
+			</section>
+			<div class="gallery">
+			</div>
+		</section>
+		<section id="contact">
+			<h2>Contact</h2>
+			<p>Vous avez un projet ? Discutons-en !</p>
+			<form action="#" method="post">
+				<label for="name">Nom</label>
+				<input type="text" name="name" id="name">
+				<label for="email">Email</label>
+				<input type="email" name="email" id="email">
+				<label for="message">Message</label>
+				<textarea name="message" id="message" cols="30" rows="10"></textarea>
+				<input type="submit" value="Envoyer">
+			</form>
+		</section>
+		<!-- FENETRE MODALE-->
+		<aside id="modal-edit" class="modal" role="dialog">
+			<div class="modal-wrapper js-modal-stop">
+				<div class="nav-modal">
+					<button class="js-modal-previous"><i class="fa-solid fa-arrow-left"></i></button>
+					<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+				</div>
+				<div class="modal-contain">
+					<div class="gallery-container">
+					</div>
+				</div>
+			</div>
+		</aside>
+		<template id="modal-form">
+			<h3>Ajout photo</h3>
+			<form action="index.html" class="form-modal" method="post" enctype="multipart/form-data">
+				<div class="form-image">
+					<div class="hidden">
+						<i class="fa-regular fa-image js-hidden"></i>
+						<label class="label-file js-hidden" for="image" id="label-img">
+							+ Ajouter photo
+							<input type="file" id="image" class="inputfile js-hidden" name="image" required >
+						</label>
+						<p>jpg, png : 4mo max</p>
+					</div>
+				</div>
+				<div class="input-form">
+					<label for="title">Titre</label>
+					<input type="text" name="title" class="champs" id="title" required  />
+					<label for="category">Categorie</label>
+					<input list="categorie-list" class="champs" id="category" name="category" required  />
+					<datalist id="categorie-list" required>               
+					</datalist>
 				</div>
 				<hr />
-				<button class="btn-modal"></button>
-			</div>
-		</div>
-	</aside>
-</main>
-
-<footer>
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-</footer>
+				<input type="submit" value="Valider" class="btn btn-submit inactif" >
+			</form>
+		</template>
+	</main>
+	<footer>
+		<nav>
+			<ul>
+				<li>Mentions Légales</li>
+			</ul>
+		</nav>
+	</footer>
+</div>
 </body>
 </html>
