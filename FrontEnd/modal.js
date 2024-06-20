@@ -15,7 +15,9 @@ if(hasToken()){
     
     let modal = null;
     
-    //fonction qui permet l'ouverture de la modal
+    /**
+     * fonction qui permet l'ouverture de la modal
+     */
     const openModal = function (event){
         event.preventDefault()
         const target = document.querySelector(event.target.getAttribute('href'))
@@ -24,10 +26,13 @@ if(hasToken()){
         modal.addEventListener('click', closeModal)
         modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
-        localStorage.setItem('modalOpen', 'true');
     }
     
-    //fonction de fermeture de modal
+    /**
+     * fonction qui permet la fermture de la modal
+     * @param {} event 
+     * @returns 
+     */
     const closeModal = function (event){
         if(modal === null) return
         event.preventDefault()
@@ -36,7 +41,6 @@ if(hasToken()){
         modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
         modal = null;
-        localStorage.setItem('modalOpen', 'false');
     }
     
     const stopPropagation = function (event){
@@ -56,7 +60,9 @@ if(hasToken()){
         }
     })
 
-    //Fonction pour l'affichage de l'index dans son mode edition 
+    /**
+     * Fonction pour afficher le site dans son mode "edition"
+     */
     function affichageEdition(){
         const affichageEdit = document.querySelector('.edit');
         affichageEdit.style.display = 'block';
@@ -66,7 +72,35 @@ if(hasToken()){
         affichageLogout.innerHTML = "logout";
         affichageLogout.addEventListener('click', logout);
     }
+
+    /**
+     * Fonction pour générer la première fenêtre de modal
+     */
     
+    function genererModal(){
+        
+        const previousNone = document.querySelector(".js-modal-previous");
+        previousNone.style.display = 'none';
+        const navModal = document.querySelector(".nav-modal");
+        navModal.style.justifyContent = 'flex-end';
+        const modal = document.querySelector(".gallery-container");
+        const titleModal = document.createElement("h3");
+        titleModal.innerText = "Galerie photo";
+        const galleryEdit = document.createElement("div");
+        galleryEdit.className = "gallery-edit";
+        const hrModal = document.createElement("hr");
+        const btnModal = document.createElement("button");
+        btnModal.classList.add('btn', 'btn-ajout');
+        btnModal.innerText = "Ajouter une photo";
+
+        modal.appendChild(titleModal);
+        modal.appendChild(galleryEdit);
+        modal.appendChild(hrModal);
+        modal.appendChild(btnModal);
+
+        genererTravauxModal(works);
+        
+    }
     
     /**
      * Fonction pour afficher les différents travaux
@@ -106,33 +140,12 @@ if(hasToken()){
     }
     
     
-    genererModal()
+    genererModal();
 
-    function genererModal(){
-        
-        const previousNone = document.querySelector(".js-modal-previous");
-        previousNone.style.display = 'none';
-        const navModal = document.querySelector(".nav-modal");
-        navModal.style.justifyContent = 'flex-end';
-        const modal = document.querySelector(".gallery-container");
-        const titleModal = document.createElement("h3");
-        titleModal.innerText = "Galerie photo";
-        const galleryEdit = document.createElement("div");
-        galleryEdit.className = "gallery-edit";
-        const hrModal = document.createElement("hr");
-        const btnModal = document.createElement("button");
-        btnModal.classList.add('btn', 'btn-ajout');
-        btnModal.innerText = "Ajouter une photo";
-
-        modal.appendChild(titleModal);
-        modal.appendChild(galleryEdit);
-        modal.appendChild(hrModal);
-        modal.appendChild(btnModal);
-
-        genererTravauxModal(works);
-        
-    }
-    
+    /**
+     * Fonction pour supprimer les travaux un par un, selon l'id
+     * @param {} id 
+     */
     async function suppressionTravaux(id){
         try{
             const token = localStorage.getItem('authToken');
@@ -148,7 +161,7 @@ if(hasToken()){
                 console.log('Élément supprimé avec succès');
                 clearModal();
                 genererModal();
-                //genererTravauxModal(works);
+                genererTravauxModal(works);
             }
             else{
                 console.error('Erreur lors de la suppression :', response.statusText);
@@ -159,7 +172,9 @@ if(hasToken()){
         }
     }
     
-    //genere la deuxieme étape de la modal
+    /**
+     * Génere la deuxième fenetre de la modal
+     */
     function genererTravauxModalStep2(){
     
         const previousNone = document.querySelector(".js-modal-previous");
@@ -180,7 +195,9 @@ if(hasToken()){
         gestionFormulaire();
     }
     
-    //genere le formulaire de la modal
+    /**
+     * Génere le formulaire le modal
+     */
     function genererFormModal(){
 
         const templateForm = document.getElementById('modal-form');
@@ -194,7 +211,10 @@ if(hasToken()){
         btnForm.disabled  = true;
     }
     
-    //Affiche les categories
+    /**
+     * Fonction qui affiche les différentes catégories des travaux
+     * @param {*} categories 
+     */
     function afficherCategorie(categories) {
         const datalistElement = document.getElementById('categorie-list');
     
@@ -207,6 +227,10 @@ if(hasToken()){
             datalistElement.appendChild(optionElement);
         });
     }
+
+    /**
+     *  Fonction qui traite les données du formulaire
+     */
     
     function gestionFormulaire() {
         const formModal = document.querySelector('.form-modal');
@@ -216,7 +240,6 @@ if(hasToken()){
         formModal.addEventListener("submit", function(event){
 
             event.preventDefault();
-
             //Création d'un objet formData pour récupérer les données du formulaire
             const formData = new FormData(formModal);
             
@@ -225,10 +248,11 @@ if(hasToken()){
             ajoutTravail(formData);
             
         });
-        //document.addEventListener
     }
    
-    
+    /**
+     * Active ou désactive le bouton valider selon le remplissage des champs du formulaire
+     */
     function boutonValidation(){
         const inputImage = document.getElementById('image');
         const inputTitre = document.getElementById('title');
@@ -236,7 +260,7 @@ if(hasToken()){
         const btnForm = document.querySelector('.btn-submit');
         let imageValid, categorieValid, titreValid = false;
 
-        inputTitre.addEventListener('change', function() {
+        inputTitre.addEventListener('input', function() {
             titreValid  = inputTitre.value !== '';
             btnForm.disabled = !(imageValid && categorieValid && titreValid);
         });
@@ -251,6 +275,11 @@ if(hasToken()){
             btnForm.disabled = !(imageValid && categorieValid && titreValid);
         });
     }
+
+    /**
+     * Vérifie que les champs du formulaire sont bien rempli
+     * @returns 
+     */
 
     function validationForm() {
         let isValid = true;
@@ -271,6 +300,10 @@ if(hasToken()){
         return isValid;
     }
 
+    /**
+     * Fonction qui ajoute un travail
+     * @param {*} chargeUtile 
+     */
     async function ajoutTravail(chargeUtile){
         const token = localStorage.getItem('authToken');
         console.log(token);
@@ -292,6 +325,9 @@ if(hasToken()){
         }
     }
 
+    /**
+     * Fonction qui vérifie que la taille de l'image ne dépasse pas les 4Mo
+     */
     function validerTailleImage() {
         const input = document.getElementById('image');
         const file = input.files[0];
@@ -304,7 +340,9 @@ if(hasToken()){
         }
     }
 
-    //fonction affichage de l'image
+    /**
+     * Fonction qui affiche l'image upload dans la modal
+     */
 
     function afficherImage() {
         const inputFile = document.getElementById('image');
@@ -337,45 +375,45 @@ if(hasToken()){
    
 
 
-    //efface le contenu de la modal
+    /**
+     * Fonction qui efface le contenu de la modal
+     */
     function clearModal(){
         const clear = document.querySelector(".gallery-container");
         clear.innerHTML = "";
     }
 
-    // Déconnexion et suppression du token
+    /**
+     * Fonction qui permet de se déconnecter 
+     */
     function logout() {
         const token = localStorage.getItem('authToken');
-        console.log(token);
         localStorage.removeItem('authToken');
         window.location.href = "login.html";
-        console.log(token);
     }
 
-    //Fonction pour afficher les différents travaux
-function genererTravaux(works){
-    
-    works.forEach(work => {
-        //Initialisation de la variable figure qui prend en compte les travaux
-        //Création de la balise html figure
-        const workElement = document.createElement("figure");
+    /**
+     * Fonction qui permet d'afficher les travaux sur la page du site
+     * @param {*} works 
+     */
+    function genererTravaux(works){
+        
+        works.forEach(work => {
+            const workElement = document.createElement("figure");
 
-        //Création des différents éléments du travail
-        const imageElement = document.createElement("img");
-        imageElement.src = work.imageUrl;
-        imageElement.alt = work.title;
-        const figcaptionElement = document.createElement("figcaption");
-        figcaptionElement.innerText = work.title;
-
-        //Rattachement des éléments a son parent
-        const gallery = document.querySelector(".gallery");
-        //On rattache la balise work à son parent
-        gallery.appendChild(workElement);
-        //Rattachement des éléments travaux à son parent
-        workElement.appendChild(imageElement);
-        workElement.appendChild(figcaptionElement);
-    });
-}
+            //Création des différents éléments du travail
+            const imageElement = document.createElement("img");
+            imageElement.src = work.imageUrl;
+            imageElement.alt = work.title;
+            const figcaptionElement = document.createElement("figcaption");
+            figcaptionElement.innerText = work.title;
+            const gallery = document.querySelector(".gallery");
+           
+            gallery.appendChild(workElement);
+            workElement.appendChild(imageElement);
+            workElement.appendChild(figcaptionElement);
+        });
+    }
 
 }
 
