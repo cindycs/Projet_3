@@ -55,3 +55,19 @@ main {
     row-gap: 5%;
     justify-content: space-between;
 }
+
+input[type="submit"]{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover{
+	opacity: 0.8;
+}

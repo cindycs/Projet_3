@@ -60,7 +60,6 @@ works.forEach(work => {
         //.. On l'ajoute au set
         shownCategories.add(categoryName);
         const filtreElement = document.createElement('button');
-        //classList au lieu de className pour ajouter plusieurs class en même temps
         filtreElement.classList.add('btn-filtre', 'btn-cat'+categoryId);
         filtreElement.innerText = categoryName;
         filtre.appendChild(filtreElement);
@@ -74,7 +73,7 @@ works.forEach(work => {
             genererTravauxId(works, categoryId);
         });
     }
-    });   
+});   
 
 //Fonction pour afficher les différents travaux par ID
 function genererTravauxId(works, categoryId){
@@ -97,7 +96,6 @@ function genererTravauxId(works, categoryId){
             const gallery = document.querySelector(".gallery");
             //On rattache la balise figure à son parent
             gallery.appendChild(workElement);
-            //Rattachement des éléments travaux à son parent
             workElement.appendChild(imageElement);
             workElement.appendChild(figcaptionElement);
         }
