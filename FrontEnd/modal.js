@@ -73,8 +73,6 @@ if(hasToken()){
      * @param {*} works 
      */
     function genererTravauxModal(works){
-
-        genererModal();
         
         works.forEach(work => {
             // Création de la balise html figure
@@ -107,7 +105,8 @@ if(hasToken()){
         nextElement.addEventListener("click", genererTravauxModalStep2);
     }
     
-    genererTravauxModal(works);
+    
+    genererModal()
 
     function genererModal(){
         
@@ -129,6 +128,8 @@ if(hasToken()){
         modal.appendChild(galleryEdit);
         modal.appendChild(hrModal);
         modal.appendChild(btnModal);
+
+        genererTravauxModal(works);
         
     }
     
@@ -145,7 +146,9 @@ if(hasToken()){
         
             if (response.ok){
                 console.log('Élément supprimé avec succès');
-                location.reload();
+                clearModal();
+                genererModal();
+                //genererTravauxModal(works);
             }
             else{
                 console.error('Erreur lors de la suppression :', response.statusText);
@@ -168,7 +171,7 @@ if(hasToken()){
 
         previousNone.addEventListener("click", () => {
             clearModal();
-            genererTravauxModal(works);
+            genererModal();
         }); 
         
         clearModal();
@@ -218,6 +221,8 @@ if(hasToken()){
             const formData = new FormData(formModal);
             
             validerTailleImage();
+            validationForm();
+            ajoutTravail(formData);
             
         });
         //document.addEventListener
@@ -279,6 +284,8 @@ if(hasToken()){
     
         if (response.ok){
             console.log('Élément ajouté avec succès');
+            clearModal();
+            genererFormModal();
         }
         else{
             console.error('Erreur lors de l\'ajout :', response.statusText);
@@ -294,10 +301,6 @@ if(hasToken()){
             alert('La taille du fichier ne doit pas dépasser 4 Mo.');
             clearModal();
             genererFormModal();
-        }
-        else {
-            validationForm();
-            ajoutTravail(formData);
         }
     }
 
@@ -348,6 +351,32 @@ if(hasToken()){
         window.location.href = "login.html";
         console.log(token);
     }
+
+    //Fonction pour afficher les différents travaux
+function genererTravaux(works){
+    
+    works.forEach(work => {
+        //Initialisation de la variable figure qui prend en compte les travaux
+        //Création de la balise html figure
+        const workElement = document.createElement("figure");
+
+        //Création des différents éléments du travail
+        const imageElement = document.createElement("img");
+        imageElement.src = work.imageUrl;
+        imageElement.alt = work.title;
+        const figcaptionElement = document.createElement("figcaption");
+        figcaptionElement.innerText = work.title;
+
+        //Rattachement des éléments a son parent
+        const gallery = document.querySelector(".gallery");
+        //On rattache la balise work à son parent
+        gallery.appendChild(workElement);
+        //Rattachement des éléments travaux à son parent
+        workElement.appendChild(imageElement);
+        workElement.appendChild(figcaptionElement);
+    });
+}
+
 }
 
 
