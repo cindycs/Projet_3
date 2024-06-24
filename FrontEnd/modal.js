@@ -161,7 +161,7 @@ if(hasToken()){
                 console.log('Élément supprimé avec succès');
                 clearModal();
                 genererModal();
-                genererTravauxModal(works);
+                //genererTravauxModal(works);
             }
             else{
                 console.error('Erreur lors de la suppression :', response.statusText);
@@ -243,10 +243,9 @@ if(hasToken()){
             //Création d'un objet formData pour récupérer les données du formulaire
             const formData = new FormData(formModal);
             
-            validerTailleImage();
-            validationForm();
-            ajoutTravail(formData);
-            
+            if(validerTailleImage()){
+                ajoutTravail(formData);
+            }
         });
     }
    
@@ -277,51 +276,33 @@ if(hasToken()){
     }
 
     /**
-     * Vérifie que les champs du formulaire sont bien rempli
-     * @returns 
-     */
-
-    function validationForm() {
-        let isValid = true;
-        const form = document.querySelector('.form-modal');
-        const inputs = form.querySelectorAll('input[required]');
-
-
-        inputs.forEach(input => {
-            if (!input.value.trim()) {
-                isValid = false;
-                input.classList.add('error');
-            }
-            else {
-                input.classList.remove('error');
-            }
-        });
-
-        return isValid;
-    }
-
-    /**
      * Fonction qui ajoute un travail
      * @param {*} chargeUtile 
      */
     async function ajoutTravail(chargeUtile){
         const token = localStorage.getItem('authToken');
         console.log(token);
-        const response = await fetch(`http://localhost:5678/api/works/`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            body: chargeUtile,
-        });
-    
-        if (response.ok){
-            console.log('Élément ajouté avec succès');
-            clearModal();
-            genererFormModal();
+        try {
+            const response = await fetch(`http://localhost:5678/api/works/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: chargeUtile,
+            });
+        
+            if (response.ok){
+                console.log('Élément ajouté avec succès');
+                clearModal();
+                genererFormModal();
+            }
+            else{
+                console.error('Erreur lors de l\'ajout :', response.statusText);
+            }
         }
-        else{
-            console.error('Erreur lors de l\'ajout :', response.statusText);
+        
+        catch(e){
+            console.error('Erreur:', e);
         }
     }
 
@@ -332,12 +313,15 @@ if(hasToken()){
         const input = document.getElementById('image');
         const file = input.files[0];
         const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
+        let tailleVerif = true;
     
         if (file.size > maxSize) {
             alert('La taille du fichier ne doit pas dépasser 4 Mo.');
             clearModal();
             genererFormModal();
+            tailleVerif = false;
         }
+        return tailleVerif;
     }
 
     /**
@@ -346,7 +330,6 @@ if(hasToken()){
 
     function afficherImage() {
         const inputFile = document.getElementById('image');
-        //const previewImage = document.getElementById('preview');
         
         inputFile.addEventListener('change', function(event) {
             const file = event.target.files[0];    
@@ -392,12 +375,14 @@ if(hasToken()){
         window.location.href = "login.html";
     }
 
+}
+
     /**
      * Fonction qui permet d'afficher les travaux sur la page du site
      * @param {*} works 
      */
     function genererTravaux(works){
-        
+            
         works.forEach(work => {
             const workElement = document.createElement("figure");
 
@@ -408,13 +393,11 @@ if(hasToken()){
             const figcaptionElement = document.createElement("figcaption");
             figcaptionElement.innerText = work.title;
             const gallery = document.querySelector(".gallery");
-           
+        
             gallery.appendChild(workElement);
             workElement.appendChild(imageElement);
             workElement.appendChild(figcaptionElement);
         });
     }
-
-}
 
 
