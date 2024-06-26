@@ -8,8 +8,12 @@ if(hasToken()){
     // affichage de la modification
     affichageEdition();
     //Récupération des travaux depuis l'API
-    const reponse = await fetch("http://localhost:5678/api/works");
-    const works = await reponse.json();
+
+            let reponse = await fetch("http://localhost:5678/api/works");
+            let works = await reponse.json();
+    
+
+
     const responseCategories = await fetch("http://localhost:5678/api/categories");
     const categories = await responseCategories.json();
     
@@ -26,6 +30,7 @@ if(hasToken()){
         modal.addEventListener('click', closeModal)
         modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+        genererModal();
     }
     
     /**
@@ -106,7 +111,10 @@ if(hasToken()){
      * Fonction pour afficher les différents travaux
      * @param {*} works 
      */
-    function genererTravauxModal(works){
+    async function genererTravauxModal(works){
+
+        reponse = await fetch("http://localhost:5678/api/works");
+        works = await reponse.json();
         
         works.forEach(work => {
             // Création de la balise html figure
@@ -140,7 +148,7 @@ if(hasToken()){
     }
     
     
-    genererModal();
+
 
     /**
      * Fonction pour supprimer les travaux un par un, selon l'id
@@ -161,7 +169,7 @@ if(hasToken()){
                 console.log('Élément supprimé avec succès');
                 clearModal();
                 genererModal();
-                //genererTravauxModal(works);
+                genererTravauxModal(works);
             }
             else{
                 console.error('Erreur lors de la suppression :', response.statusText);
@@ -381,7 +389,10 @@ if(hasToken()){
      * Fonction qui permet d'afficher les travaux sur la page du site
      * @param {*} works 
      */
-    function genererTravaux(works){
+    async function genererTravaux(works){
+
+        reponse = await fetch("http://localhost:5678/api/works");
+        works = await reponse.json();
             
         works.forEach(work => {
             const workElement = document.createElement("figure");
