@@ -5,14 +5,11 @@ function hasToken(){
 
 if(hasToken()){
    
-    // affichage de la modification
+
     affichageEdition();
-    //Récupération des travaux depuis l'API
 
-            let reponse = await fetch("http://localhost:5678/api/works");
-            let works = await reponse.json();
-    
-
+    let reponse = await fetch("http://localhost:5678/api/works");
+    let works = await reponse.json();
 
     const responseCategories = await fetch("http://localhost:5678/api/categories");
     const categories = await responseCategories.json();
@@ -81,7 +78,6 @@ if(hasToken()){
     /**
      * Fonction pour générer la première fenêtre de modal
      */
-    
     function genererModal(){
         
         const previousNone = document.querySelector(".js-modal-previous");
@@ -124,6 +120,7 @@ if(hasToken()){
             // Création des différents éléments du travail
             const imageElement = document.createElement("img");
             imageElement.src = work.imageUrl;
+            imageElement.alt = work.title;
             const closeElement = document.createElement("button");
             closeElement.className = 'button-trash'; 
             const iconeElement = document.createElement("i");
@@ -146,9 +143,6 @@ if(hasToken()){
         const nextElement = document.querySelector(".btn-ajout");
         nextElement.addEventListener("click", genererTravauxModalStep2);
     }
-    
-    
-
 
     /**
      * Fonction pour supprimer les travaux un par un, selon l'id
@@ -169,7 +163,7 @@ if(hasToken()){
                 console.log('Élément supprimé avec succès');
                 clearModal();
                 genererModal();
-                genererTravauxModal(works);
+                genererTravaux(works);
             }
             else{
                 console.error('Erreur lors de la suppression :', response.statusText);
@@ -179,24 +173,23 @@ if(hasToken()){
             console.error('Erreur:', e);    
         }
     }
+    const previousNone = document.querySelector(".js-modal-previous");
+    previousNone.addEventListener("click", () => {
+        clearModal();
+        genererModal();
+    }); 
     
     /**
      * Génere la deuxième fenetre de la modal
      */
     function genererTravauxModalStep2(){
     
-        const previousNone = document.querySelector(".js-modal-previous");
         previousNone.style.display = 'block';
         const navModal = document.querySelector(".nav-modal");
         navModal.style.justifyContent = 'space-between';
         const btnModalAjout = document.querySelector('.btn-ajout');
         btnModalAjout.style.display = 'none';
 
-        previousNone.addEventListener("click", () => {
-            clearModal();
-            genererModal();
-        }); 
-        
         clearModal();
         genererFormModal();
         afficherImage();
@@ -239,7 +232,6 @@ if(hasToken()){
     /**
      *  Fonction qui traite les données du formulaire
      */
-    
     function gestionFormulaire() {
         const formModal = document.querySelector('.form-modal');
 
@@ -335,7 +327,6 @@ if(hasToken()){
     /**
      * Fonction qui affiche l'image upload dans la modal
      */
-
     function afficherImage() {
         const inputFile = document.getElementById('image');
         
@@ -363,7 +354,6 @@ if(hasToken()){
             }
         });
     }
-   
 
 
     /**
@@ -385,30 +375,30 @@ if(hasToken()){
 
 }
 
-    /**
-     * Fonction qui permet d'afficher les travaux sur la page du site
-     * @param {*} works 
-     */
-    async function genererTravaux(works){
+/**
+ * Fonction qui permet d'afficher les travaux sur la page du site
+ * @param {*} works 
+ */
+async function genererTravaux(works){
 
-        reponse = await fetch("http://localhost:5678/api/works");
-        works = await reponse.json();
-            
-        works.forEach(work => {
-            const workElement = document.createElement("figure");
-
-            //Création des différents éléments du travail
-            const imageElement = document.createElement("img");
-            imageElement.src = work.imageUrl;
-            imageElement.alt = work.title;
-            const figcaptionElement = document.createElement("figcaption");
-            figcaptionElement.innerText = work.title;
-            const gallery = document.querySelector(".gallery");
+    reponse = await fetch("http://localhost:5678/api/works");
+    works = await reponse.json();
         
-            gallery.appendChild(workElement);
-            workElement.appendChild(imageElement);
-            workElement.appendChild(figcaptionElement);
-        });
-    }
+    works.forEach(work => {
+        const workElement = document.createElement("figure");
+
+        //Création des différents éléments du travail
+        const imageElement = document.createElement("img");
+        imageElement.src = work.imageUrl;
+        imageElement.alt = work.title;
+        const figcaptionElement = document.createElement("figcaption");
+        figcaptionElement.innerText = work.title;
+        const gallery = document.querySelector(".gallery");
+    
+        gallery.appendChild(workElement);
+        workElement.appendChild(imageElement);
+        workElement.appendChild(figcaptionElement);
+    });
+}
 
 
