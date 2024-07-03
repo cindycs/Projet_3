@@ -19,7 +19,7 @@ if(hasToken()){
     /**
      * fonction qui permet l'ouverture de la modal
      */
-    const openModal = function (event){
+    const openModal = function (event) {
         event.preventDefault()
         const target = document.querySelector(event.target.getAttribute('href'))
         target.style.display = 'flex';
@@ -35,7 +35,7 @@ if(hasToken()){
      * @param {} event 
      * @returns 
      */
-    const closeModal = function (event){
+    const closeModal = function (event) {
         if(modal === null) return
         event.preventDefault()
         modal.style.display = "none";
@@ -43,10 +43,11 @@ if(hasToken()){
         modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation)
         modal = null;
+        clearModal();
     }
     
-    const stopPropagation = function (event){
-        event.stopPropagation()
+    const stopPropagation = function (event) {
+        event.stopPropagation();
     }
     
     //pour chaque clique du bouton .js-modal l'écouteur execute la fonction openModal
@@ -65,7 +66,7 @@ if(hasToken()){
     /**
      * Fonction pour afficher le site dans son mode "edition"
      */
-    function affichageEdition(){
+    function affichageEdition() {
         const affichageEdit = document.querySelector('.edit');
         affichageEdit.style.display = 'block';
         const affichageEditTop = document.querySelector('.edit-top');
@@ -78,7 +79,7 @@ if(hasToken()){
     /**
      * Fonction pour générer la première fenêtre de modal
      */
-    function genererModal(){
+    function genererModal() {
         
         const previousNone = document.querySelector(".js-modal-previous");
         previousNone.style.display = 'none';
@@ -107,7 +108,7 @@ if(hasToken()){
      * Fonction pour afficher les différents travaux
      * @param {*} works 
      */
-    async function genererTravauxModal(works){
+    async function genererTravauxModal(works) {
 
         reponse = await fetch("http://localhost:5678/api/works");
         works = await reponse.json();
@@ -148,7 +149,7 @@ if(hasToken()){
      * Fonction pour supprimer les travaux un par un, selon l'id
      * @param {} id 
      */
-    async function suppressionTravaux(id){
+    async function suppressionTravaux(id) {
         try{
             const token = localStorage.getItem('authToken');
             const response = await fetch(`http://localhost:5678/api/works/${id}`, {
@@ -173,16 +174,11 @@ if(hasToken()){
             console.error('Erreur:', e);    
         }
     }
-    const previousNone = document.querySelector(".js-modal-previous");
-    previousNone.addEventListener("click", () => {
-        clearModal();
-        genererModal();
-    }); 
     
     /**
      * Génere la deuxième fenetre de la modal
      */
-    function genererTravauxModalStep2(){
+    function genererTravauxModalStep2() {
     
         previousNone.style.display = 'block';
         const navModal = document.querySelector(".nav-modal");
@@ -195,11 +191,18 @@ if(hasToken()){
         afficherImage();
         gestionFormulaire();
     }
+
+    //Gère la fonction précédent de la modal présente dans la 2e fenêtre de la modal
+    const previousNone = document.querySelector(".js-modal-previous");
+    previousNone.addEventListener("click", () => {
+        clearModal();
+        genererModal();
+    }); 
     
     /**
      * Génere le formulaire le modal
      */
-    function genererFormModal(){
+    function genererFormModal() {
 
         const templateForm = document.getElementById('modal-form');
         const modalContain = document.querySelector(".gallery-container");
@@ -243,16 +246,16 @@ if(hasToken()){
             //Création d'un objet formData pour récupérer les données du formulaire
             const formData = new FormData(formModal);
             
-            if(validerTailleImage()){
+            if(validerTailleImage()) {
                 ajoutTravail(formData);
             }
         });
     }
    
     /**
-     * Active ou désactive le bouton valider selon le remplissage des champs du formulaire
+     * Fonction pour activer ou désactiver le bouton valider selon le remplissage des champs du formulaire
      */
-    function boutonValidation(){
+    function boutonValidation() {
         const inputImage = document.getElementById('image');
         const inputTitre = document.getElementById('title');
         const inputCategorie = document.getElementById('categorie-list');
@@ -279,7 +282,7 @@ if(hasToken()){
      * Fonction qui ajoute un travail
      * @param {*} chargeUtile 
      */
-    async function ajoutTravail(chargeUtile){
+    async function ajoutTravail(chargeUtile) {
         const token = localStorage.getItem('authToken');
         console.log(token);
         try {
@@ -359,7 +362,7 @@ if(hasToken()){
     /**
      * Fonction qui efface le contenu de la modal
      */
-    function clearModal(){
+    function clearModal() {
         const clear = document.querySelector(".gallery-container");
         clear.innerHTML = "";
     }
@@ -372,14 +375,13 @@ if(hasToken()){
         localStorage.removeItem('authToken');
         window.location.href = "login.html";
     }
-
 }
 
 /**
  * Fonction qui permet d'afficher les travaux sur la page du site
  * @param {*} works 
  */
-async function genererTravaux(works){
+async function genererTravaux(works) {
 
     reponse = await fetch("http://localhost:5678/api/works");
     works = await reponse.json();
