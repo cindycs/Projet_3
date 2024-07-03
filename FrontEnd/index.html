@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<link rel="stylesheet" href="./assets/modal.css">
 	<script type="module" src="works.js"></script>
-	<script type="module" src="modal.js" defer></script>
+	<script src="modal.js" defer></script>
 </head>
 <body>
 <div class="edit-top"><p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p></div>
@@ -93,14 +93,13 @@
 				</div>
 				<div class="input-form">
 					<label for="title">Titre</label>
-					<input type="text" name="title" class="champs" id="title" required  />
+					<input type="text" name="title" class="champs" id="title" required>
 					<label for="category">Catégorie</label>
 					<select name="category" id="categorie-list" class="champs" required>
-						<option value=""></option>
+						<option value=" "></option>
 					</select>
-					  
 				</div>
-				<hr />
+				<hr>
 				<input type="submit" value="Valider" class="btn btn-submit" >
 			</form>
 		</template>

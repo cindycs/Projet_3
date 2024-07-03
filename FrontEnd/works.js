@@ -7,22 +7,16 @@ const works = await reponse.json();
 function genererTravaux(works){
     
     works.forEach(work => {
-        //Initialisation de la variable figure qui prend en compte les travaux
-        //Création de la balise html figure
-        const workElement = document.createElement("figure");
 
-        //Création des différents éléments du travail
+        const workElement = document.createElement("figure");
         const imageElement = document.createElement("img");
         imageElement.src = work.imageUrl;
         imageElement.alt = work.title;
         const figcaptionElement = document.createElement("figcaption");
         figcaptionElement.innerText = work.title;
-
-        //Rattachement des éléments a son parent
         const gallery = document.querySelector(".gallery");
-        //On rattache la balise work à son parent
+
         gallery.appendChild(workElement);
-        //Rattachement des éléments travaux à son parent
         workElement.appendChild(imageElement);
         workElement.appendChild(figcaptionElement);
     });
@@ -37,7 +31,7 @@ genererTravaux(works);
 //On crée le premier filtre par défaut 
 const filtre = document.getElementById("filtres");
 const filtreDefaut = document.createElement('button');
-filtreDefaut.className = "btn-filtre btn-defaut";
+filtreDefaut.className = "btn-filtre btn-defaut btn-active";
 filtreDefaut.innerHTML = "Tous";
 filtre.appendChild(filtreDefaut);
 
@@ -46,6 +40,9 @@ const boutonDefaut = document.querySelector(".btn-defaut");
 boutonDefaut.addEventListener("click", function () {
     clearGallery();
     genererTravaux(works);
+    const boutons = document.querySelectorAll('.btn-filtre');
+    boutons.forEach(btn => btn.classList.remove('btn-active'));
+    filtreDefaut.classList.add('btn-active');
 });
 
 //Utilisation d'un set pour garder une trace des catégories déjà affichées. Il stocke des valeurs unique et évite les doublons
@@ -66,11 +63,11 @@ works.forEach(work => {
 
         let classfiltre = "btn-cat"+categoryId;
 
-        //On crée l'écouteur d'évenement pour afficher tous les travaux lors du click
         let boutonFiltre = document.querySelector("."+classfiltre);
         boutonFiltre.addEventListener("click", function () {
             clearGallery();
             genererTravauxId(works, categoryId);
+            activerBouton(boutonFiltre);
         });
     }
 });   
@@ -82,11 +79,8 @@ function genererTravauxId(works, categoryId){
     works.forEach(work => {
         if (work.categoryId === categoryId){
 
-            //Initialisation de la variable figure qui prend en compte les travaux
-            //Création de la balise html figure
             const workElement = document.createElement("figure");
 
-            //Création des différents éléments du travail
             const imageElement = document.createElement("img");
             imageElement.src = work.imageUrl;
             imageElement.alt = work.title;
@@ -94,7 +88,7 @@ function genererTravauxId(works, categoryId){
             figcaptionElement.innerText = work.title;
 
             const gallery = document.querySelector(".gallery");
-            //On rattache la balise figure à son parent
+
             gallery.appendChild(workElement);
             workElement.appendChild(imageElement);
             workElement.appendChild(figcaptionElement);
@@ -102,9 +96,16 @@ function genererTravauxId(works, categoryId){
     });
 }
 
+//Fonction pour afficher le filtre actif et désactiver les autres
+function activerBouton(bouton){
+    const boutons = document.querySelectorAll('.btn-filtre');
+    boutons.forEach(btn => btn.classList.remove('btn-active'));
+    bouton.classList.add('btn-active');
+}
+
 function clearGallery() {
     const gallery = document.querySelector(".gallery");
-    gallery.innerHTML = ''; // Vider le contenu de la galerie
+    gallery.innerHTML = ''; 
 }
 
 

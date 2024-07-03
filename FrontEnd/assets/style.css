@@ -140,12 +140,12 @@ nav li a{
 	margin-bottom: 1em;
 }
 /*--------- FILTRES -------*/
-#filtres{
+#filtres {
 	display: flex;
 	justify-content: center;;
 }
 
-.btn-filtre{
+.btn-filtre {
 	background: none;
 	color: #1D6154;
 	border: 2px solid #1D6154;
@@ -157,7 +157,12 @@ nav li a{
 	font-weight: bold;
 }
 
-.btn-filtre:hover{
+.btn-filtre:hover {
+	color: #fff;
+	background-color: #1D6154;
+}
+
+.btn-active {
 	color: #fff;
 	background-color: #1D6154;
 }
