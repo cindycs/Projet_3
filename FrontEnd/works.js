@@ -2,9 +2,11 @@
 const reponse = await fetch("http://localhost:5678/api/works");
 const works = await reponse.json();
 
-
-//Fonction pour afficher les différents travaux
-function genererTravaux(works){
+/**
+ * Fonction pour afficher les différents travaux
+ * @param {*} works 
+ */
+function genererTravaux(works) {
     
     works.forEach(work => {
 
@@ -22,7 +24,6 @@ function genererTravaux(works){
     });
 }
 
-//Affichage des travaux sur la page
 genererTravaux(works);
 
 
@@ -72,8 +73,12 @@ works.forEach(work => {
     }
 });   
 
-//Fonction pour afficher les différents travaux par ID
-function genererTravauxId(works, categoryId){
+/**
+ * Fonction pour afficher les différents travaux par ID
+ * @param {*} works 
+ * @param {*} categoryId 
+ */
+function genererTravauxId(works, categoryId) {
     clearGallery();
 
     works.forEach(work => {
@@ -96,13 +101,19 @@ function genererTravauxId(works, categoryId){
     });
 }
 
-//Fonction pour afficher le filtre actif et désactiver les autres
-function activerBouton(bouton){
+/**
+ * Fonction pour afficher le filtre actif et désactiver les autres
+ * @param {*} bouton 
+ */
+function activerBouton(bouton) {
     const boutons = document.querySelectorAll('.btn-filtre');
     boutons.forEach(btn => btn.classList.remove('btn-active'));
     bouton.classList.add('btn-active');
 }
 
+/**
+ * Fonction pour nettoyer la gallery
+ */
 function clearGallery() {
     const gallery = document.querySelector(".gallery");
     gallery.innerHTML = ''; 
