@@ -1,7 +1,9 @@
-function recupForm(){
+/**
+ * fonction pour récupérer les données du formulaire
+ */
+function recupForm() {
     const formulaireLogin = document.querySelector(".form-login");
     formulaireLogin.addEventListener("submit", function(event){
-        //On arrête le comportement par défaut de submit
         event.preventDefault();
         //Récupération des informations du formulaire
         const identifiant = {
@@ -18,7 +20,10 @@ function recupForm(){
 
 recupForm();
 
-//Exemple de requête de login en JavaScript
+/**
+ * Fonction de login
+ * @param {*} chargeUtile 
+ */
 async function login(chargeUtile) {
     try{
         const response = await fetch('http://localhost:5678/api/users/login', {
@@ -36,7 +41,6 @@ async function login(chargeUtile) {
             // Redirection vers la page index
             window.location.href = "index.html";
         } else {
-            //console.error('Login failed');
             erreurAuthentification();
         }
     }
@@ -45,7 +49,9 @@ async function login(chargeUtile) {
     }
 }
 
-//Affichage d'un message sur la page login pour indiquer que les identifiants ne sont pas correct
+/**
+ * fonction qui affiche un message sur la page login pour indique les identifiants ne sont pas correct
+ */
 function erreurAuthentification() {
     const messageErreur =  document.getElementById("incorrect");
     messageErreur.innerText = "Email ou mot de passe incorrect";
