@@ -284,7 +284,6 @@ if(hasToken()){
      */
     async function ajoutTravail(chargeUtile) {
         const token = localStorage.getItem('authToken');
-        console.log(token);
         try {
             const response = await fetch(`http://localhost:5678/api/works/`, {
                 method: 'POST',
@@ -298,6 +297,7 @@ if(hasToken()){
                 console.log('Élément ajouté avec succès');
                 clearModal();
                 genererFormModal();
+                genererTravaux(works);
             }
             else{
                 console.error('Erreur lors de l\'ajout :', response.statusText);
@@ -383,7 +383,7 @@ if(hasToken()){
  */
 async function genererTravaux(works) {
 
-    reponse = await fetch("http://localhost:5678/api/works");
+    const reponse = await fetch("http://localhost:5678/api/works");
     works = await reponse.json();
         
     works.forEach(work => {
