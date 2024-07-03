@@ -383,6 +383,8 @@ if(hasToken()){
  */
 async function genererTravaux(works) {
 
+    clearGallery();
+
     const reponse = await fetch("http://localhost:5678/api/works");
     works = await reponse.json();
         
@@ -401,6 +403,14 @@ async function genererTravaux(works) {
         workElement.appendChild(imageElement);
         workElement.appendChild(figcaptionElement);
     });
+}
+
+/**
+ * Fonction pour nettoyer la gallery
+ */
+function clearGallery() {
+    const gallery = document.querySelector(".gallery");
+    gallery.innerHTML = ''; 
 }
 
 
