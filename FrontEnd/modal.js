@@ -240,7 +240,7 @@ if(hasToken()){
 
         boutonValidation();
        
-        formModal.addEventListener("submit", function(event){
+        document.querySelector('.btn-submit').addEventListener("click", function(event){
 
             event.preventDefault();
             //Création d'un objet formData pour récupérer les données du formulaire
@@ -268,6 +268,7 @@ if(hasToken()){
         });
 
         inputImage.addEventListener('change', function() {
+            console.log(inputImage);
             imageValid  = inputImage.value != null;
             btnForm.disabled = !(imageValid && categorieValid && titreValid);
         });
@@ -297,7 +298,9 @@ if(hasToken()){
                 console.log('Élément ajouté avec succès');
                 clearModal();
                 genererFormModal();
+                afficherImage();
                 genererTravaux(works);
+                gestionFormulaire();
             }
             else{
                 console.error('Erreur lors de l\'ajout :', response.statusText);
@@ -332,6 +335,8 @@ if(hasToken()){
      */
     function afficherImage() {
         const inputFile = document.getElementById('image');
+
+        console.log('test');
         
         inputFile.addEventListener('change', function(event) {
             const file = event.target.files[0];    
@@ -357,7 +362,7 @@ if(hasToken()){
             }
         });
     }
-
+    
 
     /**
      * Fonction qui efface le contenu de la modal
